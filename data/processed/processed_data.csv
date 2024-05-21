@@ -1,0 +1,21 @@
+age,position,field,institution,importance_recycling,singleusecup_frequency,singleusecup_reason,singleusecup_ban_support,options_bring_own_cup,options_multiusecup_small_deposit,options_multiusecup_large_deposit,options_multiusecup_to_buy,options_sit_down,options_none,singleusecup_ban_impact,further_thoughts,multiusecup_deposit,importance_waste_reduction
+24,Master (MSc/MA),Engineering,ETH Zürich,5,Never,Convenience,4,Absolutely,Preferably,Maybe,Preferably,Preferably,Maybe,2,NA,3,5
+24,Master (MSc/MA),Engineering,ETH Zürich,4,Never,I never use single-use cups,2,Absolutely,Preferably,Maybe,Not at all,Preferably,Preferably,2,Don’t take away beer cups!,5,4
+24,Master (MSc/MA),Engineering,ETH Zürich,4,Occasionally,Convenience,1,Absolutely,Absolutely,Not at all,Absolutely,Absolutely,Not at all,3,NA,2,4
+22,Master (MSc/MA),Engineering,ETH Zürich,4,About once a week,Hygiene,1,Absolutely,Preferably,Not at all,Maybe,Absolutely,Not at all,4,NA,2,4
+24,Master (MSc/MA),Engineering,ETH Zürich,4,Occasionally,Convenience,2,Absolutely,Absolutely,Not at all,Not at all,Absolutely,Not at all,2,NA,5,5
+24,Master (MSc/MA),Business & Economics,UZH,4,Never,I never use single-use cups,5,Preferably,Absolutely,Not at all,Absolutely,Absolutely,Not at all,1,You happy now ? Luv,3,4
+23,Bachelor (BSc/BA),Engineering,ETH Zürich,4,Occasionally,Convenience,2,Absolutely,Maybe,Not at all,Not at all,Absolutely,Preferably,3,NA,5,5
+25,Master (MSc/MA),Engineering,ETH Zürich,4,Never,I never use single-use cups,3,Absolutely,Maybe,Not at all,Maybe,Preferably,Not at all,1,NA,2,5
+23,Bachelor (BSc/BA),Engineering,ETH Zürich,5,Occasionally,Convenience,2,Absolutely,Maybe,Not at all,Not at all,Absolutely,Not at all,5,An Events wie SEE halt nicht realistisch,2,5
+26,Master (MSc/MA),Engineering,ETH Zürich,4,Never,I never use single-use cups,3,Absolutely,Preferably,Maybe,Maybe,Maybe,Maybe,1,NA,4,4
+22,Bachelor (BSc/BA),Arts,ZHdK,5,Never,Convenience,5,Absolutely,Absolutely,Maybe,Preferably,Maybe,Not at all,1,NA,5,5
+25,Master (MSc/MA),Engineering,ETH Zürich,4,About once a week,Convenience,2,Absolutely,Absolutely,Preferably,Absolutely,Absolutely,Not at all,3,NA,5,4
+23,Bachelor (BSc/BA),Engineering,ETH Zürich,4,Occasionally,Convenience,5,Absolutely,Absolutely,Maybe,Maybe,Preferably,Maybe,2,NA,5,5
+21,Bachelor (BSc/BA),Engineering,ETH Zürich,1,About once a week,Convenience,1,Absolutely,Absolutely,Not at all,Not at all,Absolutely,Not at all,3,"Option yes, but not too expensive",0,1
+20,Bachelor (BSc/BA),Engineering,ETH Zürich,4,Occasionally,Convenience,3,Maybe,Absolutely,Not at all,Not at all,Absolutely,Not at all,2,NA,4,4
+23,Bachelor (BSc/BA),Engineering,ETH Zürich,4,Never,I never use single-use cups,4,Absolutely,Absolutely,Not at all,Maybe,Maybe,Not at all,1,Make single use cups cost something(.50 Fr or so),2,3
+24,Master (MSc/MA),Informatics & Computer Science,ETH Zürich,4,Never,I don't think about it,3,Preferably,Preferably,Preferably,Not at all,Maybe,Not at all,1,The whole idea depends on how good the alternative option is implemented.,2,4
+23,Bachelor (BSc/BA),Engineering,ETH Zürich,5,Never,Convenience,5,Absolutely,Preferably,Absolutely,Maybe,Maybe,Maybe,1,"I think for some swiss peeps, money does not matter that much so a deposit would need to be quite high. For me personally, already a Chf 1 deposit would be more than enough to bring back the cup (looking at the Pfandsystem in Düütschland)",3,5
+21,Bachelor (BSc/BA),Natural Sciences,ETH Zürich,4,Occasionally,Convenience,3,Absolutely,Absolutely,Maybe,Preferably,Absolutely,Not at all,3,NA,5,5
+23,Bachelor (BSc/BA),Engineering,ETH Zürich,4,About once a week,Convenience,4,Absolutely,Absolutely,Not at all,Not at all,Absolutely,Not at all,2,NA,3,4
