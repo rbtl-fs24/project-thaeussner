@@ -1,11 +1,15 @@
 library(tidyverse)
 
+# import raw data
 raw_data <- read_rds(here::here("data/raw/raw_data.rds"))
 
+# create processed data
 processed_data <- raw_data |> 
+  
   # delete unused columns
   select(-c("Why? And what else would need to change?",
             "The data collected will be used anonymously for a published report as part of the course. If you want to be sent the report in June, you can enter your e-mail address at the end of the survey.")) |> 
+  
   # rename columns to keep
   rename("age" = "Age",
          "position" = "Current study program or position",
@@ -27,5 +31,6 @@ processed_data <- raw_data |>
          "options_none" = "What options would need to be available at kiosks, cafeterias, etc? [No options; you have to bring your own cup]",
          )
 
+# write processed data to csv and rds
 write_rds(processed_data, "data/processed/processed_data.rds")
 write_csv(processed_data, "data/processed/processed_data.csv")

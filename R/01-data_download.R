@@ -10,5 +10,6 @@ raw_data <- raw_data_private |>
   select(-c("Timestamp", 
             "Email address"))
 
+# write raw data to csv and rds
 write_rds(raw_data, "data/raw/raw_data.rds")
 write_csv(raw_data, "data/raw/raw_data.csv")

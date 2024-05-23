@@ -1,0 +1,56 @@
+---
+title: "What do students think about a campus-wide ban on signle-use cups at cafeterias and kiosks?"
+subtitle: "Analysis of a non-representative survey of students in Zurich"
+date: 2024-06-06
+author:
+  - name: Till Häussner
+    orcid: 0009-0005-7617-9312
+    email: thaeussner@student.ethz.ch
+    affiliation: 
+      - name: ETH Zürich
+        url: www.ethz.ch
+abstract: > 
+  
+keywords:
+  - Waste Reduction
+  - Single-Use Cups
+  - Students
+  - University Campus
+  
+format:
+  html:
+    toc: true
+    html-math-method: katex
+    css: styles.css
+    
+
+license: "CC BY"
+copyright: 
+  holder: 
+  year:
+funding: "The author received no specific funding for this work."
+---
+
+# Introduction
+
+Introduction section with 3 to 5 sentences introduces the context within which the data was created.
+
+# Methods
+
+Methods section describes in 3 to 5 sentences how the data was obtained.
+
+# Results
+
+Figures and tables in Results section are interpreted with 2 to 3 sentences each.
+
+# Conclusions
+
+Conclusions concisely summarize findings in a bullet point format.
+
+-   aosbasda
+
+-   asdasda
+
+-   sdasdas
+
+-   daasd
