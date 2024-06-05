@@ -3,12 +3,18 @@ library(tidyverse)
 # import raw data
 raw_data <- read_rds(here::here("data/raw/raw_data.rds"))
 
+processed_data_a <- raw_data |> 
+  rename("consent" = "The data collected will be used anonymously for a published report as part of the course. If you want to be sent the report in June, you can enter your e-mail address at the end of the survey.")
+
+processed_data_b <- processed_data_a |> 
+  filter(consent != "I do not consent.")
+
 # create processed data
-processed_data <- raw_data |> 
+processed_data <- processed_data_b |> 
   
   # delete unused columns
   select(-c("Why? And what else would need to change?",
-            "The data collected will be used anonymously for a published report as part of the course. If you want to be sent the report in June, you can enter your e-mail address at the end of the survey.")) |> 
+            "consent")) |> 
   
   # rename columns to keep
   rename("age" = "Age",

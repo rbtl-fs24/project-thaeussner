@@ -25,11 +25,21 @@ format:
     
 
 license: "CC BY"
-copyright: 
-  holder: 
-  year:
 funding: "The author received no specific funding for this work."
 ---
+
+```{r}
+#| echo: FALSE
+
+library(tidyverse)
+library(scales)
+library(ggthemes)
+library(ggExtra)
+
+df <- read_rds(here::here("data/processed/processed_data.rds"))
+
+
+```
 
 # Introduction
 
@@ -42,6 +52,60 @@ Methods section describes in 3 to 5 sentences how the data was obtained.
 # Results
 
 Figures and tables in Results section are interpreted with 2 to 3 sentences each.
+
+
+```{r}
+#| layout-ncol: 2
+#| label: fig-respondents-institution
+#| fig-cap: "Distribution of responses"
+#| fig-subcap: 
+#|   - "Institutions of respondents"
+#|   - "Age distribution of respondents"
+
+ggplot(data = df, 
+       mapping = aes(x = reorder(institution, institution, length),
+                     fill = field)) +
+  geom_bar() +
+  coord_flip() +
+  labs(x = "Institution",
+       y = "Number of responses") +
+  theme_minimal() +
+  scale_fill_colorblind() +
+  theme(legend.position = "none")
+
+ggplot(data = df,
+       mapping = aes(x = age,
+                     fill = field)) +
+  geom_bar() +
+  labs(x = "Age",
+       y = "Number of responses",
+       fill = "Field of Study / Work") +
+  theme_minimal() +
+  scale_fill_colorblind()
+```
+
+```{r}
+#| label: fig-respondents-detail
+#| fig-cap: "Position, Institution, Age and Field of Respondents"
+
+df <- df |> 
+  mutate(position = factor(position, levels = c("Bachelor (BSc/BA)", "Master (MSc/MA)", "PhD / Doctorate", "Employee")))
+
+ggplot(data = df, 
+       mapping = aes(x = position,
+                     y = age,
+                     color = field)) +
+  geom_jitter(size = 3, alpha = 0.6, width = 0.3, height = 0.2) +
+  coord_flip() +
+  labs(x = "Position",
+       y = "Age",
+       color = "Field of Study / Work") +
+  facet_wrap(~institution) +
+  theme_minimal() +
+  scale_color_colorblind()
+
+```
+
 
 # Conclusions
 
