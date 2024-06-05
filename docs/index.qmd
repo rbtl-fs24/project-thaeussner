@@ -19,9 +19,11 @@ keywords:
   
 format:
   html:
+    code-fold: true
     toc: true
     html-math-method: katex
     css: styles.css
+    
     
 
 license: "CC BY"
@@ -29,7 +31,7 @@ funding: "The author received no specific funding for this work."
 ---
 
 ```{r}
-#| echo: FALSE
+#| warning: false
 
 library(tidyverse)
 library(scales)
@@ -37,6 +39,7 @@ library(ggthemes)
 library(ggExtra)
 
 df <- read_rds(here::here("data/processed/processed_data.rds"))
+
 
 
 ```
@@ -47,13 +50,15 @@ Introduction section with 3 to 5 sentences introduces the context within which t
 
 # Methods
 
-Methods section describes in 3 to 5 sentences how the data was obtained.
+The data was obtained using a Google Forms survey. Over the span of nine days from 2024-05-21 to 2024-05-29, students were asked on campus or online to fill out the questionnaire. The answers were automatically gathered in Google Sheets and from there converted to csv and rds using /R/01-data_download.R .
 
 # Results
 
 Figures and tables in Results section are interpreted with 2 to 3 sentences each.
 
+## Respondents
 
+In the first section, respondents were asked to state their age, study field and level, and their institution. In @fig-respondents-institution (a), we can see that most answers came from people within Engineering at ETH, and that all respondents were in their 20s as seen in @fig-respondents-institution (b).
 ```{r}
 #| layout-ncol: 2
 #| label: fig-respondents-institution
@@ -67,22 +72,27 @@ ggplot(data = df,
                      fill = field)) +
   geom_bar() +
   coord_flip() +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
   labs(x = "Institution",
        y = "Number of responses") +
   theme_minimal() +
   scale_fill_colorblind() +
   theme(legend.position = "none")
 
-ggplot(data = df,
-       mapping = aes(x = age,
+ggplot(data = df) +
+  geom_bar(mapping = aes(x = age,
                      fill = field)) +
-  geom_bar() +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   labs(x = "Age",
        y = "Number of responses",
        fill = "Field of Study / Work") +
   theme_minimal() +
-  scale_fill_colorblind()
+  scale_fill_colorblind() +
+  geom_boxplot(mapping = aes(x = age), alpha = 0.2, position = position_nudge(y=3.5), width = 2)
+
 ```
+In @fig-respondents-detail, the study level is added as well, showing us that most respondents are indeed studying Engineering at Bachelor's or Master's level at ETH Zürich, with very few outliers.
 
 ```{r}
 #| label: fig-respondents-detail
@@ -97,7 +107,7 @@ ggplot(data = df,
                      color = field)) +
   geom_jitter(size = 3, alpha = 0.6, width = 0.3, height = 0.2) +
   coord_flip() +
-  labs(x = "Position",
+  labs(x = "Study level",
        y = "Age",
        color = "Field of Study / Work") +
   facet_wrap(~institution) +
@@ -105,6 +115,37 @@ ggplot(data = df,
   scale_color_colorblind()
 
 ```
+In the next questions, the respondents were asked to rank 1) the general importance of waste reduction and 2) the general importance of recycling on a scale of 1 (not important at all) to 5 (very important). The answers are summarized in @fig-respondents-opinions, where it can be seen that both are perceived as important by most, with waste reduction having a higher mean importance than recycling.
+
+```{r}
+#| label: fig-respondents-opinions
+#| fig-cap: "Opinions on waste reduction and recycling in general"
+
+
+ggplot(data = df) +
+  geom_jitter(mapping = aes(x = importance_waste_reduction,
+                     y = importance_recycling,
+                     color = field),
+              size = 3, alpha = 0.6, width = 0.25, height = 0.25) +
+  geom_boxplot(mapping = aes(x = importance_waste_reduction),
+               alpha = 0.2, position = position_nudge(y=1.75), width = 0.75) +
+  geom_boxplot(mapping = aes(y = importance_recycling),
+               alpha = 0.2, position = position_nudge(x=1.75), width = 0.75) +
+  labs(x = "General importance of waste reduction",
+       y = "General importance of recycling",
+       color = "Field of Study / Work") +
+  theme_minimal() +
+  scale_color_colorblind()
+
+```
+## Single-use cup habits
+
+Respondents were then asked about their usage of single use cups and how much a ban would affect them in daily life.
+
+## Opinions on a ban on single-use cups
+
+Lastly, what do respondents think about a ban on single-use cups?
+
 
 
 # Conclusions

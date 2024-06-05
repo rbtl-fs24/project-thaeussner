@@ -85,7 +85,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#respondents" id="toc-respondents" class="nav-link" data-scroll-target="#respondents">Respondents</a></li>
+  <li><a href="#single-use-cup-habits" id="toc-single-use-cup-habits" class="nav-link" data-scroll-target="#single-use-cup-habits">Single-use cup habits</a></li>
+  <li><a href="#opinions-on-a-ban-on-single-use-cups" id="toc-opinions-on-a-ban-on-single-use-cups" class="nav-link" data-scroll-target="#opinions-on-a-ban-on-single-use-cups">Opinions on a ban on single-use cups</a></li>
+  </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
   </ul>
 </nav>
@@ -140,30 +145,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
-
-Attaching package: 'scales'
-
-
-The following object is masked from 'package:purrr':
-
-    discard
-
-
-The following object is masked from 'package:readr':
-
-    col_factor</code></pre>
-</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggExtra)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/processed/processed_data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
@@ -171,31 +161,40 @@ The following object is masked from 'package:readr':
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
-<p>Methods section describes in 3 to 5 sentences how the data was obtained.</p>
+<p>The data was obtained using a Google Forms survey. Over the span of nine days from 2024-05-21 to 2024-05-29, students were asked on campus or online to fill out the questionnaire. The answers were automatically gathered in Google Sheets and from there converted to csv and rds using /R/01-data_download.R .</p>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
 <p>Figures and tables in Results section are interpreted with 2 to 3 sentences each.</p>
+<section id="respondents" class="level2">
+<h2 class="anchored" data-anchor-id="respondents">Respondents</h2>
+<p>In the first section, respondents were asked to state their age, study field and level, and their institution. In <a href="#fig-respondents-institution" class="quarto-xref">Figure&nbsp;1</a> (a), we can see that most answers came from people within Engineering at ETH, and that all respondents were in their 20s as seen in <a href="#fig-respondents-institution" class="quarto-xref">Figure&nbsp;1</a> (b).</p>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(institution, institution, length),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> field)) <span class="sc">+</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Institution"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of responses"</span>) <span class="sc">+</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> field)) <span class="sc">+</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of responses"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Field of Study / Work"</span>) <span class="sc">+</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_colorblind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Institution"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of responses"</span>) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> field)) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of responses"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Field of Study / Work"</span>) <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age), <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">y=</span><span class="fl">3.5</span>), <span class="at">width =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div id="fig-respondents-institution" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-respondents-institution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -231,7 +230,10 @@ Figure&nbsp;1: Distribution of responses
 </figcaption>
 </figure>
 </div>
+<p>In <a href="#fig-respondents-detail" class="quarto-xref">Figure&nbsp;2</a>, the study level is added as well, showing us that most respondents are indeed studying Engineering at Bachelor’s or Master’s level at ETH Zürich, with very few outliers.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">position =</span> <span class="fu">factor</span>(position, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Bachelor (BSc/BA)"</span>, <span class="st">"Master (MSc/MA)"</span>, <span class="st">"PhD / Doctorate"</span>, <span class="st">"Employee"</span>)))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -241,12 +243,13 @@ Figure&nbsp;1: Distribution of responses
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> field)) <span class="sc">+</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">height =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Position"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Study level"</span>,</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Age"</span>,</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Field of Study / Work"</span>) <span class="sc">+</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>institution) <span class="sc">+</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-respondents-detail" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -260,6 +263,47 @@ Figure&nbsp;2: Position, Institution, Age and Field of Respondents
 </div>
 </div>
 </div>
+<p>In the next questions, the respondents were asked to rank 1) the general importance of waste reduction and 2) the general importance of recycling on a scale of 1 (not important at all) to 5 (very important). The answers are summarized in <a href="#fig-respondents-opinions" class="quarto-xref">Figure&nbsp;3</a>, where it can be seen that both are perceived as important by most, with waste reduction having a higher mean importance than recycling.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> importance_waste_reduction,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> importance_recycling,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> field),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> importance_waste_reduction),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">y=</span><span class="fl">1.75</span>), <span class="at">width =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> importance_recycling),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">1.75</span>), <span class="at">width =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"General importance of waste reduction"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"General importance of recycling"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Field of Study / Work"</span>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-respondents-opinions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-respondents-opinions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-respondents-opinions-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-respondents-opinions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Opinions on waste reduction and recycling in general
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="single-use-cup-habits" class="level2">
+<h2 class="anchored" data-anchor-id="single-use-cup-habits">Single-use cup habits</h2>
+<p>Respondents were then asked about their usage of single use cups and how much a ban would affect them in daily life.</p>
+</section>
+<section id="opinions-on-a-ban-on-single-use-cups" class="level2">
+<h2 class="anchored" data-anchor-id="opinions-on-a-ban-on-single-use-cups">Opinions on a ban on single-use cups</h2>
+<p>Lastly, what do respondents think about a ban on single-use cups?</p>
+</section>
 </section>
 <section id="conclusions" class="level1">
 <h1>Conclusions</h1>
