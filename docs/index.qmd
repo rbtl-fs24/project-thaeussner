@@ -142,6 +142,69 @@ ggplot(data = df) +
 
 Respondents were then asked about their usage of single use cups and how much a ban would affect them in daily life.
 
+```{r}
+#| label: fig-habits
+#| fig-cap: "Single-use cup usage frequency and main reason"
+
+
+df <- df |> 
+  mutate(singleusecup_frequency = factor(singleusecup_frequency, levels = c("I don't know", "Multiple times per day", "Every day", "About once a week", "Occasionally", "Never"))) |> 
+  mutate(singleusecup_reason = factor(singleusecup_reason, levels = c("Convenience", "Hygiene", "Aesthetics", "Price (single-use cups are free as opposed to multi-use cups)", "I don't think about it", "I never use single-use cups")))
+
+ggplot(data = df,
+       mapping = aes(x = singleusecup_frequency,
+                     fill = singleusecup_reason)) +
+  geom_bar() +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_fill_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
+  labs(x = "How often do you buy single-use cups on campus?",
+       y = "Number of responses",
+       fill = "Main reason") +
+  theme_minimal()
+
+
+```
+
+```{r}
+#| label: fig-impact
+#| fig-cap: "Single-use cup usage frequency and main reason"
+#| #| layout-ncol: 2
+#| fig-subcap: 
+#|   - "Ban impact on daily life with main reason"
+#|   - "Ban impact on daily life with usage frequency"
+
+ggplot(data = df, 
+       mapping = aes(x = singleusecup_ban_impact,
+                     fill = singleusecup_reason)) +
+  geom_bar() +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
+  labs(x = "How would a ban impact your daily life?",
+       y = "Number of responses") +
+  theme_minimal() +
+  scale_fill_colorblind() +
+  theme(legend.position = "none")
+
+
+
+ggplot(data = df) +
+  geom_jitter(mapping = aes(x = singleusecup_ban_impact,
+                            y = singleusecup_frequency,
+                            color = singleusecup_reason),
+              size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
+  geom_boxplot(mapping = aes(x = singleusecup_ban_impact),
+               alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
+  labs(x = "How would a ban impact your daily life?",
+       y = "How often do you buy single-use cups on campus?",
+       color = "Main reason") +
+  theme_minimal()
+
+
+```
+
+
 ## Opinions on a ban on single-use cups
 
 Lastly, what do respondents think about a ban on single-use cups?
