@@ -1,5 +1,5 @@
 ---
-title: "What do students think about a campus-wide ban on signle-use cups at cafeterias and kiosks?"
+title: "What do students think about a campus-wide ban on single-use cups at cafeterias and kiosks?"
 subtitle: "Analysis of a non-representative survey of students in Zurich"
 date: 2024-06-06
 author:
@@ -9,7 +9,7 @@ author:
     affiliation: 
       - name: ETH Zürich
         url: www.ethz.ch
-abstract: > 
+abstract: "Using an online survey, 40 students in Zurich and beyond were asked about their habits with and their opinions on a campus-wide ban of single-use cups at cafeterias, cafes, kiosks and similar vendors. Most respondents were BSc and MSc engineering students at ETH Zürich, and considered both recycling and waste reduction to be important in general. The majority never or occasionally used single-use cups, with the main reason for usage being convenience. While most respondets saw the impact of a ban on their daily life to be negligible, support for such a ban was not very pronounced either way, with the average being just slightly above neutral. Were a ban to be implemented, almost all respondents considered the option to bring a personal cup to cafes and cafeterias a necessity."
 
 number-sections: true
   
@@ -26,10 +26,13 @@ format:
     html-math-method: katex
     css: styles.css
     
-    
+execute:
+  warning: false
+  message: false
 
 license: "CC BY"
 funding: "The author received no specific funding for this work."
+bibliography: references.bib
 ---
 
 ```{r}
@@ -68,7 +71,9 @@ df_summary_long <- df_summary |>
 
 # Introduction {#sec-introduction}
 
-With the growing focus on sustainability and waste reduction, single-use items in general and take-away packaging in particular are increasingly scrutinized. In 2021, single-use plastics were banned EU-wide and with that, plastic-based single-use take-away cups also for hot drinks
+With the growing focus on sustainability and waste reduction, single-use items in general and take-away packaging in particular are increasingly scrutinized. In 2021, single-use plastics were banned EU-wide and with that, plastic-based single-use take-away cups also for hot drinks [@zotero-11940]. In Germany, all businesses selling food & drinks like restaurants, cafeterias, cafes, and the like have to offer multi-use packaging options [@bundesumweltministeriums2023warum].
+
+In this report, we want to focus solely on single-use cups for hot drinks, as offered for free by most cafes and cafeterias. In Germany alone, up to 140'000 of these consumed and thrown away every hour [@zotero-11940a]. For ETH Zürich, in order to reduce the amount of wasted single-use cups, ETH Sustainability has recommended vendors to offer multi-use cups as well, especially KeepCup and the reCircle products, with the aim of a campus-wide deposit system for multi-use cutlery [@zotero-11939]. But why not remove or ban single-use cups at cafes and cafeterias in general? At UZH, such a phase-out is underway with many cafeterias only offering multi-use cups [@universitatzurich-einweggeschirr]. But what do students think about this? And how are they using single-use cups, if at all? Would they support a campus-wide ban? And would they be affected? These are the question this project attempted to answer using a survey, the results of which are presented in this report.
 
 # Methods {#sec-methods}
 
@@ -78,9 +83,7 @@ It is important to note that this survey can not be considered representative, a
 
 # Results {#sec-results}
 
-Figures and tables in Results section are interpreted with 2 to 3 sentences each.
-
-Let's look at the results. The anonymized raw data (@tbl-rawdata) can be found in @sec-data in the appendix, where we can see that we received 40 answers to 16 relevant questions. Important, numeric variables are summarized in @tbl-summary below and will be used throughout this chapter.
+Let's look at the results. The anonymized raw data (@tbl-rawdata) can be found in the appendix, where we can see that we received 40 answers to 16 relevant questions. Important, numeric variables are summarized in @tbl-summary below and will be used throughout this chapter.
 
 ```{r}
 #| label: tbl-summary
@@ -162,8 +165,7 @@ In the next questions, the respondents were asked to rank 1) the general importa
 
 ```{r}
 #| label: fig-respondents-opinions
-#| fig-cap: "Opinions on waste reduction and recycling in general"
-#| fig-subcap: "Rated on a scale from 1 (I don't care) to 5 (I think it's very important)"
+#| fig-cap: "Opinions on waste reduction and recycling in general, rated on a scale from 1 (I don't care) to 5 (I think it's very important)"
 #| warning: false
 
 
@@ -191,10 +193,10 @@ When asked about their habits with buying drinks single-use cups on campus, most
 ```{r}
 #| label: fig-habits
 #| layout-ncol: 2
-#| fig-cap: "Single-use cup usage frequency and main reason"
+#| fig-cap: "How and why are respondents using single-use cups?"
 #| fig-subcap: 
-#|   - "Frequency and main reason"
-#|   - "Frequency and study program"
+#|   - "Single-use cup usage fequency and main reason"
+#|   - "Single-use cup usage frequency and study program"
 #| warning: false
 
 
@@ -237,7 +239,7 @@ Depending on personal preferences or other factors, a ban on single-use cups can
 #| layout-ncol: 2
 #| fig-subcap: 
 #|   - "Ban impact on daily life"
-#|   - "Ban impact on daily life, with single-use cup usage frequency"
+#|   - "Ban impact on daily life, with usage frequency"
 #| warning: false
 
 ggplot(data = df) +
@@ -280,8 +282,7 @@ Now, what do respondents think about a ban on single-use cups? The question here
 
 ```{r}
 #| label: fig-support
-#| fig-cap: "Support for a ban on single-use cups"
-#| fig-subcap: "Rated on a scale from 1 (No, absolutely not) to 5 (Yes, absolutely)"
+#| fig-cap: "Support for a ban on single-use cups, rated on a scale from 1 (No, absolutely not) to 5 (Yes, absolutely)"
 #| warning: false
 
 ggplot(data = df) +
@@ -292,7 +293,7 @@ ggplot(data = df) +
   geom_vline(xintercept=3.35, color="darkgrey",  linetype = "dashed", size=0.5) +
   geom_label(x=3.35, y=0, label="Average: 3.35", vjust=-0.25) +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
-  labs(x = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
+  labs(x = "Support for a ban on single-use cups on a scale from 1 to 5 (average: 3.35)",
        y = "Number of responses (total: 40)",
        fill = "Main reason") +
   theme_minimal() +
@@ -440,8 +441,7 @@ Lastly, does a small deposit on a multi-use cup have any effect, or will it just
 
 ```{r}
 #| label: fig-deposit
-#| fig-cap: "How high would a deposit on multi-use cups need to be in order for them not to be thrown away?"
-#| fig-subcap: "Rated on a scale from 0 (No deposit; nobody would throw away a free multi-use cup) to 10 (10 Fr. or higher)"
+#| fig-cap: "How high would a deposit on multi-use cups need to be in order for them not to be thrown away? Rated on a scale from 0 (No deposit; nobody would throw away a free multi-use cup) to 10 (10 Fr. or higher)"
 #| warning: false
 
 ggplot(data = df) +
@@ -463,8 +463,7 @@ ggplot(data = df) +
 
 ```{r}
 #| label: fig-deposit-support
-#| fig-cap: "How high would a deposit on multi-use cups need to be in order for them not to be thrown away?"
-#| fig-subcap: "Rated on a scale from 0 (No deposit; nobody would throw away a free multi-use cup) to 10 (10 Fr. or higher)"
+#| fig-cap: "How high would a deposit on multi-use cups need to be in order for them not to be thrown away? Rated on a scale from 0 (No deposit; nobody would throw away a free multi-use cup) to 10 (10 Fr. or higher)"
 #| warning: false
 
 ggplot(data = df) +
@@ -473,9 +472,9 @@ ggplot(data = df) +
                             color = singleusecup_reason),
               size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
   geom_boxplot(mapping = aes(x = multiusecup_deposit),
-               alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
+               alpha = 0.2, position = position_nudge(y=0.5), width = 0.5) +
   geom_boxplot(mapping = aes(y = singleusecup_ban_support),
-               alpha = 0.2, position = position_nudge(x=0.75), width = 1) +
+               alpha = 0.2, position = position_nudge(x=0.5), width = 1) +
   geom_vline(xintercept=4, color="darkgrey",  linetype = "dashed", size=0.5) +
   geom_label(x=4, y=4.4, label="Average: 4", vjust=0) +
   geom_hline(yintercept=3.35, color="darkgrey",  linetype = "dashed", size=0.5) +
@@ -483,15 +482,13 @@ ggplot(data = df) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
   labs(x = "Minimum deposit for a multi-use cup [Fr.]",
-       y = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
+       y = "Support for a single-use cup ban from 1 to 5 (average: 3.35)",
        color = "Main reason for using single-use cups") +
   theme_minimal()
 
 ```
 
 # Conclusions {#sec-conclusions}
-
-Conclusions concisely summarize findings in a bullet point format.
 
 -   Most respondents are studying engineering at Bachelor's or Master's level at ETH Zürich.
 
@@ -507,7 +504,7 @@ Conclusions concisely summarize findings in a bullet point format.
 
 -   To summarize, although probably not being the most popular move, a ban with the right alternatives would not have a big negative impact for the majority of respondents and would likely be accepted down the road.
 
-# Raw Data {.appendix} {#sec-data}
+# Raw Data {.appendix}
 
 ```{r}
 #| label: tbl-rawdata
