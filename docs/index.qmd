@@ -136,7 +136,7 @@ ggplot(data = df) +
 
 ```
 
-In @fig-respondents-detail, the study level is added as well, showing us that most respondents are indeed studying engineering at Bachelor's or Master's level at ETH Zürich, with very few outliers.
+In @fig-respondents-detail, the study level is added as well, showing us that most respondents are indeed studying engineering at Bachelor's or Master's level at ETH Zürich. There are very few outliers.
 
 ```{r}
 #| label: fig-respondents-detail
@@ -188,7 +188,7 @@ ggplot(data = df) +
 
 ## Single-use cup habits {#sec-habits}
 
-When asked about their habits with buying drinks single-use cups on campus, most respondents answered that they never or occasionally bought single-use cups, and if they did, the overwhelming majority choose "convenience" as their main reason as seen in @fig-habits.
+When asked about their habits with buying drinks single-use cups on campus, most respondents answered that they never or occasionally bought single-use cups, and if they did, the overwhelming majority choose "convenience" as their main reason as seen in @fig-habits-1. The usage frequency shows no dependency on study program, as seen in @fig-habits-2. The two main study programs Bachelor and Master are represented about equally for all usage frequencies.
 
 ```{r}
 #| label: fig-habits
