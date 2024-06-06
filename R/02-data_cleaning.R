@@ -35,7 +35,11 @@ processed_data <- processed_data_b |>
          "options_multiusecup_to_buy" = "What options would need to be available at kiosks, cafeterias, etc? [Multi-use cups that you have to buy (> 10 Fr.)]",
          "options_sit_down" = "What options would need to be available at kiosks, cafeterias, etc? [The option to sit down with proper ceramic cups at no extra cost]",
          "options_none" = "What options would need to be available at kiosks, cafeterias, etc? [No options; you have to bring your own cup]",
-         )
+         ) |> 
+  
+  # create id column
+  mutate(id = 1:n()) |> 
+  relocate(id)
 
 # write processed data to csv and rds
 write_rds(processed_data, "data/processed/processed_data.rds")
