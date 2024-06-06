@@ -10,6 +10,8 @@ author:
       - name: ETH Zürich
         url: www.ethz.ch
 abstract: > 
+
+number-sections: true
   
 keywords:
   - Waste Reduction
@@ -34,31 +36,64 @@ funding: "The author received no specific funding for this work."
 #| warning: false
 
 library(tidyverse)
+library(knitr)
+library(kableExtra)
 library(scales)
 library(ggthemes)
 library(ggExtra)
 
 df <- read_rds(here::here("data/processed/processed_data.rds"))
 
+df_summary <- df |> 
+  summarize(answers = n(),
+            avg_age = mean(age, na.rm = TRUE),
+            std_age = sd(age, na.rm = TRUE),
+            avg_importance_recycling = mean(importance_recycling, na.rm = TRUE),
+            std_importance_recycling = sd(importance_recycling, na.rm = TRUE),
+            avg_importance_waste_reduction = mean(importance_waste_reduction, na.rm = TRUE),
+            std_importance_waste_reduction = sd(importance_waste_reduction, na.rm = TRUE),
+            avg_ban_support = mean(singleusecup_ban_support, na.rm = TRUE),
+            std_ban_support = sd(singleusecup_ban_support, na.rm = TRUE),
+            avg_ban_impact = mean(singleusecup_ban_impact, na.rm = TRUE),
+            std_ban_impact = sd(singleusecup_ban_impact, na.rm = TRUE),
+            avg_multiusecup_deposit = mean(multiusecup_deposit, na.rm = TRUE),
+            std_multiusecup_deposit = sd(multiusecup_deposit, na.rm = TRUE))
 
+df_summary_long <- df_summary |> 
+  pivot_longer(cols = answers:std_multiusecup_deposit,
+               names_to = "variable",
+               values_to = "value")
 
 ```
 
-# Introduction
+# Introduction {#sec-introduction}
 
 Introduction section with 3 to 5 sentences introduces the context within which the data was created.
 
-# Methods
+# Methods {#sec-methods}
 
-The data was obtained using a Google Forms survey. Over the span of nine days from 2024-05-21 to 2024-05-29, students were asked on campus or online to fill out the questionnaire. The answers were automatically gathered in Google Sheets and from there converted to csv and rds using /R/01-data_download.R .
+The data was obtained using a Google Forms survey. Questions were split into three sections, about 1) general info, 2) their habits with single-use cups and 3) their opinions and further thoughts on a campus-wide ban on single-use cups, the results of which can be found in @sec-respondents, @sec-habits, and @sec-opinions. Over the span of nine days from 2024-05-21 to 2024-05-29, students were asked on campus or online to fill out the questionnaire. The answers were automatically gathered in Google Sheets and from there converted to csv and rds using /R/01-data_download.R.
 
-# Results
+It is important to note that this survey can not be considered representative, as I mainly prompted friends and colleagues to complete the survey and did not distribute this survey widely across campus or further, and thus **this is just a quick, non-representative collection of opinions.**
+
+# Results {#sec-results}
 
 Figures and tables in Results section are interpreted with 2 to 3 sentences each.
 
-## Respondents
+Let's look at the results. The anonymized raw data (@tbl-rawdata) can be found in @sec-data in the appendix, where we can see that we received 40 answers to 16 relevant questions. Important, numeric variables are summarized in @tbl-summary below and will be used throughout this chapter.
 
-In the first section, respondents were asked to state their age, study field and level, and their institution. In @fig-respondents-institution (a), we can see that most answers came from people within Engineering at ETH, and that all respondents were in their 20s as seen in @fig-respondents-institution (b).
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Summarizing stats for the survey"
+
+df_summary_long |> 
+  kable() |> 
+  kable_styling()
+```
+
+## Respondents {#sec-respondents}
+
+In the first section, respondents were asked to state their age, study field and level, and their institution. In @fig-respondents-institution-1, we can see that most answers came from people within Engineering at ETH, and that all respondents were in their 20s as seen in @fig-respondents-institution-2, with an average age of `{r} df_summary_long[2, 2] ` and a standard deviation of `{r} df_summary_long[3, 2] ` years.
 
 ```{r}
 #| layout-ncol: 2
@@ -76,7 +111,7 @@ ggplot(data = df,
   coord_flip() +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
   labs(x = "Institution",
-       y = "Number of responses",
+       y = "Number of responses (total: 40)",
        fill = "Study field") +
   theme_minimal() +
   scale_fill_colorblind()
@@ -86,8 +121,8 @@ ggplot(data = df) +
                      fill = field)) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
-  labs(x = "Age",
-       y = "Number of responses",
+  labs(x = "Age (average: 23.4)",
+       y = "Number of responses (total: 40)",
        fill = "Study field") +
   theme_minimal() +
   scale_fill_colorblind() +
@@ -95,7 +130,7 @@ ggplot(data = df) +
 
 ```
 
-In @fig-respondents-detail, the study level is added as well, showing us that most respondents are indeed studying Engineering at Bachelor's or Master's level at ETH Zürich, with very few outliers.
+In @fig-respondents-detail, the study level is added as well, showing us that most respondents are indeed studying engineering at Bachelor's or Master's level at ETH Zürich, with very few outliers.
 
 ```{r}
 #| label: fig-respondents-detail
@@ -112,8 +147,8 @@ ggplot(data = df,
   geom_jitter(size = 3, alpha = 0.6, width = 0.3, height = 0.2) +
   coord_flip() +
   labs(x = "Study level",
-       y = "Age",
-       color = "Field of Study / Work") +
+       y = "Age (average: 23.4)",
+       color = "Study field") +
   facet_wrap(~institution) +
   theme_minimal() +
   scale_color_colorblind()
@@ -145,13 +180,17 @@ ggplot(data = df) +
 
 ```
 
-## Single-use cup habits
+## Single-use cup habits {#sec-habits}
 
 When asked about their habits with buying drinks single-use cups on campus, most respondents answered that they never or occasionally bought single-use cups, and if they did, the overwhelming majority choose "convenience" as their main reason as seen in @fig-habits.
 
 ```{r}
 #| label: fig-habits
+#| layout-ncol: 2
 #| fig-cap: "Single-use cup usage frequency and main reason"
+#| fig-subcap: 
+#|   - "Frequency and main reason"
+#|   - "Frequency and study program"
 #| warning: false
 
 
@@ -169,6 +208,18 @@ ggplot(data = df,
   labs(x = "How often do you buy single-use cups on campus?",
        y = "Number of responses",
        fill = "Main reason") +
+  theme_minimal()
+
+ggplot(data = df,
+       mapping = aes(x = singleusecup_frequency,
+                     fill = position)) +
+  geom_bar() +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_color_brewer() +
+  labs(x = "How often do you buy single-use cups on campus?",
+       y = "Number of responses",
+       fill = "Study program") +
   theme_minimal()
 
 
@@ -216,18 +267,13 @@ ggplot(data = df) +
 
 ```
 
-## Opinions on a ban on single-use cups
+## Opinions on a ban on single-use cups {#sec-opinions}
 
 Lastly, what do respondents think about a ban on single-use cups? The question here was "Would you support a campus-wide ban on single-use cups at cafes, kiosks, cafeterias etc?", and the answer could be given on a scale from 1 ("No, absolutely not") to 5 ("Yes, absolutely").
 
 ```{r}
 #| label: fig-support
 #| fig-cap: "Opinions on a ban on single-use cups"
-#| layout-ncol: 2
-#| layout-nrow: 2
-#| fig-subcap: 
-#|   - "Ban impact on daily life with main reason"
-#|   - "Ban impact on daily life with usage frequency"
 #| warning: false
 
 ggplot(data = df) +
@@ -241,6 +287,17 @@ ggplot(data = df) +
        fill = "Main reason") +
   theme_minimal() +
   scale_fill_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups"))
+
+```
+
+```{r}
+#| label: fig-support-detail
+#| fig-cap: "Opinions on a ban on single-use cups"
+#| layout-ncol: 2
+#| fig-subcap: 
+#|   - "Ban impact on daily life with main reason"
+#|   - "Ban impact on daily life with usage frequency"
+#| warning: false
 
 
 
@@ -361,7 +418,7 @@ ggplot(data = df_options,
 
 ```
 
-# Conclusions
+# Conclusions {#sec-conclusions}
 
 Conclusions concisely summarize findings in a bullet point format.
 
@@ -372,3 +429,14 @@ Conclusions concisely summarize findings in a bullet point format.
 -   sdasdas
 
 -   daasd
+
+# Raw Data {.appendix} {#sec-data}
+
+```{r}
+#| label: tbl-rawdata
+#| tbl-cap: "The full, anonymized raw data used for the visualizations."
+df |> 
+  select(!further_thoughts) |> 
+  kable() |> 
+  kable_styling()
+```
