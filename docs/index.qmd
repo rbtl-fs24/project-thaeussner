@@ -116,9 +116,12 @@ ggplot(data = df,
   theme_minimal() +
   scale_fill_colorblind()
 
+# using this answer from Stackoverflow for the labeled average: https://stackoverflow.com/questions/61701985/how-to-add-text-to-geom-vline-in-ggplot
 ggplot(data = df) +
   geom_bar(mapping = aes(x = age,
                      fill = field)) +
+  geom_vline(xintercept=23.425, color="black",  linetype = "dashed", size=0.5) +
+  geom_label(x=23.425, y=0, label="Average: 23.425", vjust=-0.25) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   labs(x = "Age (average: 23.4)",
@@ -126,7 +129,7 @@ ggplot(data = df) +
        fill = "Study field") +
   theme_minimal() +
   scale_fill_colorblind() +
-  geom_boxplot(mapping = aes(x = age), alpha = 0.2, position = position_nudge(y=3.5), width = 2)
+  geom_boxplot(mapping = aes(x = age), alpha = 0.2, position = position_nudge(y=2.5), width = 2)
 
 ```
 
@@ -160,6 +163,7 @@ In the next questions, the respondents were asked to rank 1) the general importa
 ```{r}
 #| label: fig-respondents-opinions
 #| fig-cap: "Opinions on waste reduction and recycling in general"
+#| fig-subcap: "Rated on a scale from 1 (I don't care) to 5 (I think it's very important)"
 #| warning: false
 
 
@@ -172,9 +176,9 @@ ggplot(data = df) +
                alpha = 0.2, position = position_nudge(y=1.75), width = 0.75) +
   geom_boxplot(mapping = aes(y = importance_recycling),
                alpha = 0.2, position = position_nudge(x=1.75), width = 0.75) +
-  labs(x = "General importance of waste reduction",
-       y = "General importance of recycling",
-       color = "Field of Study / Work") +
+  labs(x = "General importance of waste reduction (average: 4.48)",
+       y = "General importance of recycling (average: 4.33)",
+       color = "Study field") +
   theme_minimal() +
   scale_color_colorblind()
 
@@ -206,7 +210,7 @@ ggplot(data = df,
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_fill_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
   labs(x = "How often do you buy single-use cups on campus?",
-       y = "Number of responses",
+       y = "Number of responses (total: 40)",
        fill = "Main reason") +
   theme_minimal()
 
@@ -218,7 +222,7 @@ ggplot(data = df,
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_color_brewer() +
   labs(x = "How often do you buy single-use cups on campus?",
-       y = "Number of responses",
+       y = "Number of responses (total: 40)",
        fill = "Study program") +
   theme_minimal()
 
@@ -229,11 +233,11 @@ Depending on personal preferences or other factors, a ban on single-use cups can
 
 ```{r}
 #| label: fig-impact
-#| fig-cap: "The negative impact on daily life of a ban on single-use cups"
+#| fig-cap: "The impact of a ban on daily life, rated from 1 (I wouldn't notice) to 5 (It would have a negative impact on my daily life)"
 #| layout-ncol: 2
 #| fig-subcap: 
-#|   - "Ban impact on daily life with main reason"
-#|   - "Ban impact on daily life with usage frequency"
+#|   - "Ban impact on daily life"
+#|   - "Ban impact on daily life, with single-use cup usage frequency"
 #| warning: false
 
 ggplot(data = df) +
@@ -241,9 +245,11 @@ ggplot(data = df) +
                      fill = singleusecup_reason)) +
   geom_boxplot(mapping = aes(x = singleusecup_ban_impact), color = "red",
                alpha = 0.2, position = position_nudge(y=2.75), width = 3) +
+  geom_vline(xintercept=2.025, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=2.025, y=0, label="Average: 2.025", vjust=-0.25) +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
-  labs(x = "How would a ban impact your daily life?",
-       y = "Number of responses",
+  labs(x = "How would a ban impact your daily life? (average: 2.03)",
+       y = "Number of responses (total: 40)",
        fill = "Main reason") +
   theme_minimal() +
   scale_fill_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups"))
@@ -257,9 +263,10 @@ ggplot(data = df) +
               size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
   geom_boxplot(mapping = aes(x = singleusecup_ban_impact),
                alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
+  geom_vline(xintercept=2.025, color="darkgrey",  linetype = "dashed", size=0.5) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
-  labs(x = "How would a ban impact your daily life?",
+  labs(x = "How would a ban impact your daily life? (average: 2.03)",
        y = "How often do you buy single-use cups on campus?",
        color = "Main reason") +
   theme_minimal()
@@ -269,11 +276,12 @@ ggplot(data = df) +
 
 ## Opinions on a ban on single-use cups {#sec-opinions}
 
-Lastly, what do respondents think about a ban on single-use cups? The question here was "Would you support a campus-wide ban on single-use cups at cafes, kiosks, cafeterias etc?", and the answer could be given on a scale from 1 ("No, absolutely not") to 5 ("Yes, absolutely").
+Lastly, what do respondents think about a ban on single-use cups? The question here was "Would you support a campus-wide ban on single-use cups at cafes, kiosks, cafeterias etc?", and the answer could be given on a scale from 1 ("No, absolutely not") to 5 ("Yes, absolutely"). @fig-support shows that there is no clear answer, but a slight trend towards yes with an average of 3.35 and a big standard deviation of 1.27.
 
 ```{r}
 #| label: fig-support
-#| fig-cap: "Opinions on a ban on single-use cups"
+#| fig-cap: "Support for a ban on single-use cups"
+#| fig-subcap: "Rated on a scale from 1 (No, absolutely not) to 5 (Yes, absolutely)"
 #| warning: false
 
 ggplot(data = df) +
@@ -281,22 +289,24 @@ ggplot(data = df) +
                      fill = singleusecup_reason)) +
   geom_boxplot(mapping = aes(x = singleusecup_ban_support), color = "red",
                alpha = 0.2, position = position_nudge(y=2.75), width = 3) +
+  geom_vline(xintercept=3.35, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=3.35, y=0, label="Average: 3.35", vjust=-0.25) +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
-  labs(x = "Support for a ban on single-use cups from 1 to 5",
-       y = "Number of responses",
+  labs(x = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
+       y = "Number of responses (total: 40)",
        fill = "Main reason") +
   theme_minimal() +
   scale_fill_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups"))
 
 ```
-
+How do the habits with single-use cups influence the support for a ban? This is explored here, where @fig-support-detail-1 shows that the less single-use cups are used, the stronger the support for a ban is, but only slightly with a wide range. In @fig-support-detail-2, the trend between the perceived impact on daily life and support for a ban is shown. Unsurprisingly, the smaller the impact on daily life is perceived, the stronger a ban is supported in general.
 ```{r}
 #| label: fig-support-detail
-#| fig-cap: "Opinions on a ban on single-use cups"
+#| fig-cap: "Support for a ban on single-use cups, compared with habits"
 #| layout-ncol: 2
 #| fig-subcap: 
-#|   - "Ban impact on daily life with main reason"
 #|   - "Ban impact on daily life with usage frequency"
+#|   - "Ban impact on daily life with impact on daily life"
 #| warning: false
 
 
@@ -310,9 +320,11 @@ ggplot(data = df) +
                alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
   geom_smooth(mapping = aes(x = singleusecup_ban_support,
                             y = singleusecup_frequency), alpha = 0.2) +
+  geom_vline(xintercept=3.35, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=3.35, y=1.5, label="Average: 3.35", vjust=0) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
-  labs(x = "Support for a ban on single-use cups from 1 to 5",
+  labs(x = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
        y = "How often do you buy single-use cups on campus?",
        color = "Main reason") +
   theme_minimal()
@@ -328,26 +340,30 @@ ggplot(data = df) +
                alpha = 0.2, position = position_nudge(x=0.75), width = 0.5) +
   geom_smooth(mapping = aes(x = singleusecup_ban_support,
                             y = singleusecup_ban_impact), alpha = 0.2) +
+  geom_vline(xintercept=3.35, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=3.35, y=4.5, label="Average: 3.35", vjust=0) +
+  geom_hline(yintercept=2.025, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=1, y=2.025, label="Average: 2.025", hjust=0) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
-  labs(x = "Support for a ban on single-use cups from 1 to 5",
-       y = "Negative impact on daily life",
+  labs(x = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
+       y = "Negative impact on daily life (average: 2.03)",
        color = "Main reason") +
   theme_minimal()
 
 
 ```
 
-Now, if we look at support in terms of study program and field, we can see no direct trend or tendency, but a wide range of opinions @fig-support-study (a) and (b). This is probably also due to insufficient and non-respresentative data, but also reflects the fact that this topic is quite
+Now, if we look at support in terms of study field (@fig-support-study-1) and program (@fig-support-study-2), we can see no direct trend or tendency, but a wide range of opinions. This is probably also due to insufficient and non-respresentative data, but also reflects the fact that this topic is quite probably quite separate from personal work and study proferences.
 
 ```{r}
 #| label: fig-support-study
-#| fig-cap: "Opinions on a ban on single-use cups based on study program and field"
+#| fig-cap: "Support for a ban on single-use cups based on study program and field"
 #| layout-ncol: 2
 #| warning: false
 #| fig-subcap: 
 #|   - "Support for a ban based on study field"
-#|   - "Support for a ban based on study program"
+#|   - "Support for a ban based on study field and program"
 
 ggplot(data = df) +
   geom_bar(mapping = aes(x = singleusecup_ban_support,
@@ -355,8 +371,8 @@ ggplot(data = df) +
   geom_boxplot(mapping = aes(x = singleusecup_ban_support),
                alpha = 0.2, position = position_nudge(y=2.75), width = 3) +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
-  labs(x = "Support for a ban on single-use cups from 1 to 5",
-       y = "Number of responses",
+  labs(x = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
+       y = "Number of responses (total: 40)",
        fill = "Study field") +
   theme_minimal() +
   scale_fill_colorblind()
@@ -372,13 +388,15 @@ ggplot(data = df) +
                alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
   scale_color_colorblind() +
-  labs(x = "Support for a ban on single-use cups from 1 to 5",
+  labs(x = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
        y = "Study program",
        color = "Study field") +
   theme_minimal()
 
 
 ```
+
+We've seen that there is a slight support for a ban, but how should it be implemented? For this, participants were asked to state what options they needed to be available in case of a ban on single-use cups. @fig-options explores those results and shows that the option fo bring your own cups is strongly demanded by the large majority of respondents, with the option to sit down with proper ceramic cups and the option to get multi-use cups with a small deposit below 5 Fr. also being seen as important. More expensive options were not too popular, and also the idea of no available options - where a personal cup would need to be brought - was dismissed by most. 
 
 ```{r}
 #| label: fig-options
@@ -410,13 +428,66 @@ ggplot(data = df_options,
   coord_flip() +
   scale_x_discrete(labels = c("No option; you have to bring your own cup", "Multi-use cups with a large deposit (> 5 Fr.)", "Multi-use cups that you have to buy (> 10 Fr.)", "Multi-use cups with a small deposit (< 5 Fr.)", "Sit down with ceramic cups at no extra costs", "You can bring your own cup")) +
   labs(x = "Option",
-       y = "Number of answers",
+       y = "Number of answers (total: 40)",
        fill = "Opinion") +
   theme_minimal() +
   scale_fill_manual(values = color_values)
 
 
 ```
+Lastly, does a small deposit on a multi-use cup have any effect, or will it just be thrown away and thus treated as a more expensive single-use cup? What deposit is large enough for multi-use cups? This was the last question, where  respondents were asked: "How high do you think a deposit on multi-use cups would need to be in order for them not to be thrown away?" and had to choose a value on a scale from 0 ("No deposit; nobody would throw away a free multi-use cup") to 10 ("10 Fr. or higher"). @fig-deposit shows that responses here were quite varied, with peaks at 2 and 5 Fr., which do not seem to depend too much on the main reason for using single-use cups, unlike initially assumed. @fig-deposit-support shows the same data but split up to show the dependency on the support for a single-use cup ban. There is no real trend to be seen and answers vary widely.
+
+```{r}
+#| label: fig-deposit
+#| fig-cap: "How high would a deposit on multi-use cups need to be in order for them not to be thrown away?"
+#| fig-subcap: "Rated on a scale from 0 (No deposit; nobody would throw away a free multi-use cup) to 10 (10 Fr. or higher)"
+#| warning: false
+
+ggplot(data = df) +
+  geom_bar(mapping = aes(x = multiusecup_deposit,
+                     fill = singleusecup_reason)) +
+  geom_boxplot(mapping = aes(x = multiusecup_deposit), color = "red",
+               alpha = 0.2, position = position_nudge(y=2.75), width = 3) +
+  geom_vline(xintercept=4, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=4, y=0, label="Average: 4", vjust=-0.25) +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
+  scale_x_continuous(breaks = seq(from = 0, to = 10, by = 1)) +
+  labs(x = "Minimum deposit for a multi-use cup [Fr.]",
+       y = "Number of responses (total: 40)",
+       fill = "Main reason for using single-use cups") +
+  theme_minimal() +
+  scale_fill_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups"))
+
+```
+
+```{r}
+#| label: fig-deposit-support
+#| fig-cap: "How high would a deposit on multi-use cups need to be in order for them not to be thrown away?"
+#| fig-subcap: "Rated on a scale from 0 (No deposit; nobody would throw away a free multi-use cup) to 10 (10 Fr. or higher)"
+#| warning: false
+
+ggplot(data = df) +
+  geom_jitter(mapping = aes(x = multiusecup_deposit ,
+                            y = singleusecup_ban_support,
+                            color = singleusecup_reason),
+              size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
+  geom_boxplot(mapping = aes(x = multiusecup_deposit),
+               alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
+  geom_boxplot(mapping = aes(y = singleusecup_ban_support),
+               alpha = 0.2, position = position_nudge(x=0.75), width = 1) +
+  geom_vline(xintercept=4, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=4, y=4.4, label="Average: 4", vjust=0) +
+  geom_hline(yintercept=3.35, color="darkgrey",  linetype = "dashed", size=0.5) +
+  geom_label(x=6, y=3.35, label="Average: 3.35", hjust=0) +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
+  labs(x = "Minimum deposit for a multi-use cup [Fr.]",
+       y = "Support for a ban on single-use cups from 1 to 5 (average: 3.35)",
+       color = "Main reason for using single-use cups") +
+  theme_minimal()
+
+```
+
 
 # Conclusions {#sec-conclusions}
 
