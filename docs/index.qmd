@@ -66,6 +66,7 @@ In the first section, respondents were asked to state their age, study field and
 #| fig-subcap: 
 #|   - "Institutions of respondents"
 #|   - "Age distribution of respondents"
+#| warning: false
 
 ggplot(data = df, 
        mapping = aes(x = reorder(institution, institution, length),
@@ -76,8 +77,7 @@ ggplot(data = df,
   labs(x = "Institution",
        y = "Number of responses") +
   theme_minimal() +
-  scale_fill_colorblind() +
-  theme(legend.position = "none")
+  scale_fill_colorblind()
 
 ggplot(data = df) +
   geom_bar(mapping = aes(x = age,
@@ -97,6 +97,7 @@ In @fig-respondents-detail, the study level is added as well, showing us that mo
 ```{r}
 #| label: fig-respondents-detail
 #| fig-cap: "Position, Institution, Age and Field of Respondents"
+#| warning: false
 
 df <- df |> 
   mutate(position = factor(position, levels = c("Bachelor (BSc/BA)", "Master (MSc/MA)", "PhD / Doctorate", "Employee")))
@@ -120,6 +121,7 @@ In the next questions, the respondents were asked to rank 1) the general importa
 ```{r}
 #| label: fig-respondents-opinions
 #| fig-cap: "Opinions on waste reduction and recycling in general"
+#| warning: false
 
 
 ggplot(data = df) +
@@ -140,11 +142,12 @@ ggplot(data = df) +
 ```
 ## Single-use cup habits
 
-Respondents were then asked about their usage of single use cups and how much a ban would affect them in daily life.
+When asked about their habits with buying drinks single-use cups on campus, most respondents answered that they never or occasionally bought single-use cups, and if they did, the overwhelming majority choose "convenience" as their main reason as seen in @fig-habits.
 
 ```{r}
 #| label: fig-habits
 #| fig-cap: "Single-use cup usage frequency and main reason"
+#| warning: false
 
 
 df <- df |> 
@@ -165,25 +168,26 @@ ggplot(data = df,
 
 
 ```
-
+Depending on personal preferences or other factors, a ban on single-use cups can have an impact on daily life. When asked to rank this impact on a scale of 1 ("I wouldn't notice") to 5 ("It would have a negative impact on my daily life"), most respondents answered 1 ("I wouldn't notice") as seen in @fig-impact (a). In @fig-impact (b) these results are complemented with the previous answer about the usage frequency, revealing that generally - the more respondets bought drinks in single-use cups, the higher they would consider the negative impact on their daily life.
 ```{r}
 #| label: fig-impact
-#| fig-cap: "Single-use cup usage frequency and main reason"
-#| #| layout-ncol: 2
+#| fig-cap: "The negative impact on daily life of a ban on single-use cups"
+#| layout-ncol: 2
 #| fig-subcap: 
 #|   - "Ban impact on daily life with main reason"
 #|   - "Ban impact on daily life with usage frequency"
+#| warning: false
 
-ggplot(data = df, 
-       mapping = aes(x = singleusecup_ban_impact,
+ggplot(data = df) +
+  geom_bar(mapping = aes(x = singleusecup_ban_impact,
                      fill = singleusecup_reason)) +
-  geom_bar() +
+  geom_boxplot(mapping = aes(x = singleusecup_ban_impact), color = "red",
+               alpha = 0.2, position = position_nudge(y=2.75), width = 3) +
   scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
   labs(x = "How would a ban impact your daily life?",
        y = "Number of responses") +
   theme_minimal() +
-  scale_fill_colorblind() +
-  theme(legend.position = "none")
+  scale_fill_colorblind()
 
 
 
@@ -208,6 +212,107 @@ ggplot(data = df) +
 ## Opinions on a ban on single-use cups
 
 Lastly, what do respondents think about a ban on single-use cups?
+The question here was "Would you support a campus-wide ban on single-use cups at cafes, kiosks, cafeterias etc?", and the answer could be given on a scale from 1 ("No, absolutely not") to 5 ("Yes, absolutely"). 
+
+```{r}
+#| label: fig-support
+#| fig-cap: "Opinions on a ban on single-use cups"
+#| layout-ncol: 2
+#| layout-nrow: 2
+#| fig-subcap: 
+#|   - "Ban impact on daily life with main reason"
+#|   - "Ban impact on daily life with usage frequency"
+#| warning: false
+
+ggplot(data = df) +
+  geom_bar(mapping = aes(x = singleusecup_ban_support,
+                     fill = singleusecup_reason)) +
+  geom_boxplot(mapping = aes(x = singleusecup_ban_support), color = "red",
+               alpha = 0.2, position = position_nudge(y=2.75), width = 3) +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
+  labs(x = "Support for a ban on single-use cups from 1 to 5",
+       y = "Number of responses") +
+  theme_minimal() +
+  scale_fill_colorblind()
+
+
+
+ggplot(data = df) +
+  geom_jitter(mapping = aes(x = singleusecup_ban_support,
+                            y = singleusecup_frequency,
+                            color = singleusecup_reason),
+              size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
+  geom_boxplot(mapping = aes(x = singleusecup_ban_support),
+               alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
+  geom_smooth(mapping = aes(x = singleusecup_ban_support,
+                            y = singleusecup_frequency), alpha = 0.2) +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
+  labs(x = "Support for a ban on single-use cups from 1 to 5",
+       y = "How often do you buy single-use cups on campus?",
+       color = "Main reason") +
+  theme_minimal()
+
+ggplot(data = df) +
+  geom_jitter(mapping = aes(x = singleusecup_ban_support,
+                            y = singleusecup_ban_impact,
+                            color = singleusecup_reason),
+              size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
+  geom_boxplot(mapping = aes(x = singleusecup_ban_support),
+               alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
+  geom_boxplot(mapping = aes(y = singleusecup_ban_impact),
+               alpha = 0.2, position = position_nudge(x=0.75), width = 0.5) +
+  geom_smooth(mapping = aes(x = singleusecup_ban_support,
+                            y = singleusecup_ban_impact), alpha = 0.2) +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_color_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups")) +
+  labs(x = "Support for a ban on single-use cups from 1 to 5",
+       y = "Negative impact on daily life",
+       color = "Main reason") +
+  theme_minimal()
+
+
+```
+Now, if we look at support in terms of study program and field, we can see no direct trend or tendency, but a wide range of opinions @fig-support-study (a) and (b). This is probably also due to insufficient and non-respresentative data, but also reflects the fact that this topic is quite
+
+```{r}
+#| label: fig-support-study
+#| fig-cap: "Opinions on a ban on single-use cups based on study program and field"
+#| layout-ncol: 2
+#| warning: false
+#| fig-subcap: 
+#|   - "Support for a ban based on study field"
+#|   - "Support for a ban based on study program"
+
+ggplot(data = df) +
+  geom_bar(mapping = aes(x = singleusecup_ban_support,
+                     fill = field)) +
+  geom_boxplot(mapping = aes(x = singleusecup_ban_support),
+               alpha = 0.2, position = position_nudge(y=2.75), width = 3) +
+  scale_y_continuous(breaks = seq(from = 0, to = 100, by = 2)) +
+  labs(x = "Support for a ban on single-use cups from 1 to 5",
+       y = "Number of responses") +
+  theme_minimal() +
+  scale_fill_colorblind()
+
+
+
+ggplot(data = df) +
+  geom_jitter(mapping = aes(x = singleusecup_ban_support,
+                            y = position,
+                            color = field),
+              size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
+  geom_boxplot(mapping = aes(x = singleusecup_ban_support),
+               alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
+  scale_color_colorblind() +
+  labs(x = "Support for a ban on single-use cups from 1 to 5",
+       y = "Study program",
+       color = "Study field") +
+  theme_minimal()
+
+
+```
 
 
 
