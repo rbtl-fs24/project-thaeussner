@@ -68,7 +68,7 @@ df_summary_long <- df_summary |>
 
 # Introduction {#sec-introduction}
 
-Introduction section with 3 to 5 sentences introduces the context within which the data was created.
+With the growing focus on sustainability and waste reduction, single-use items in general and take-away packaging in particular are increasingly scrutinized. In 2021, single-use plastics were banned EU-wide and with that, plastic-based single-use take-away cups also for hot drinks
 
 # Methods {#sec-methods}
 
@@ -93,7 +93,7 @@ df_summary_long |>
 
 ## Respondents {#sec-respondents}
 
-In the first section, respondents were asked to state their age, study field and level, and their institution. In @fig-respondents-institution-1, we can see that most answers came from people within Engineering at ETH, and that all respondents were in their 20s as seen in @fig-respondents-institution-2, with an average age of `{r} df_summary_long[2, 2] ` and a standard deviation of `{r} df_summary_long[3, 2] ` years.
+In the first section, respondents were asked to state their age, study field and level, and their institution. In @fig-respondents-institution-1, we can see that most answers came from people within Engineering at ETH, and that all respondents were in their 20s as seen in @fig-respondents-institution-2, with an average age of `{r} df_summary_long[2, 2]` and a standard deviation of `{r} df_summary_long[3, 2]` years.
 
 ```{r}
 #| layout-ncol: 2
@@ -229,7 +229,7 @@ ggplot(data = df,
 
 ```
 
-Depending on personal preferences or other factors, a ban on single-use cups can have an impact on daily life. When asked to rank this impact on a scale of 1 ("I wouldn't notice") to 5 ("It would have a negative impact on my daily life"), most respondents answered 1 ("I wouldn't notice") as seen in @fig-impact (a). In @fig-impact (b) these results are complemented with the previous answer about the usage frequency, revealing that generally - the more respondets bought drinks in single-use cups, the higher they would consider the negative impact on their daily life.
+Depending on personal preferences or other factors, a ban on single-use cups can have an impact on daily life. When asked to rank this impact on a scale of 1 ("I wouldn't notice") to 5 ("It would have a negative impact on my daily life"), most respondents answered 1 ("I wouldn't notice") with an average of 2.03 and a standard deviation of 1.03 as seen in @fig-impact-1. In @fig-impact-2 these results are complemented with the previous answer about the usage frequency, revealing that generally - the more respondents bought drinks in single-use cups, the higher they would consider the negative impact on their daily life.
 
 ```{r}
 #| label: fig-impact
@@ -276,7 +276,7 @@ ggplot(data = df) +
 
 ## Opinions on a ban on single-use cups {#sec-opinions}
 
-Lastly, what do respondents think about a ban on single-use cups? The question here was "Would you support a campus-wide ban on single-use cups at cafes, kiosks, cafeterias etc?", and the answer could be given on a scale from 1 ("No, absolutely not") to 5 ("Yes, absolutely"). @fig-support shows that there is no clear answer, but a slight trend towards yes with an average of 3.35 and a big standard deviation of 1.27.
+Now, what do respondents think about a ban on single-use cups? The question here was "Would you support a campus-wide ban on single-use cups at cafes, kiosks, cafeterias etc?", and the answer could be given on a scale from 1 ("No, absolutely not") to 5 ("Yes, absolutely"). @fig-support shows that there is no clear answer, but a slight trend towards yes with an average of 3.35 and a big standard deviation of 1.27.
 
 ```{r}
 #| label: fig-support
@@ -299,7 +299,9 @@ ggplot(data = df) +
   scale_fill_colorblind(labels = c("Convenience", "Hygiene", "Aesthetics", "Price", "I never use single-use cups"))
 
 ```
+
 How do the habits with single-use cups influence the support for a ban? This is explored here, where @fig-support-detail-1 shows that the less single-use cups are used, the stronger the support for a ban is, but only slightly with a wide range. In @fig-support-detail-2, the trend between the perceived impact on daily life and support for a ban is shown. Unsurprisingly, the smaller the impact on daily life is perceived, the stronger a ban is supported in general.
+
 ```{r}
 #| label: fig-support-detail
 #| fig-cap: "Support for a ban on single-use cups, compared with habits"
@@ -318,8 +320,6 @@ ggplot(data = df) +
               size = 3, alpha = 0.6, width = 0.2, height = 0.2) +
   geom_boxplot(mapping = aes(x = singleusecup_ban_support),
                alpha = 0.2, position = position_nudge(y=0.75), width = 0.5) +
-  geom_smooth(mapping = aes(x = singleusecup_ban_support,
-                            y = singleusecup_frequency), alpha = 0.2) +
   geom_vline(xintercept=3.35, color="darkgrey",  linetype = "dashed", size=0.5) +
   geom_label(x=3.35, y=1.5, label="Average: 3.35", vjust=0) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 1)) +
@@ -396,7 +396,7 @@ ggplot(data = df) +
 
 ```
 
-We've seen that there is a slight support for a ban, but how should it be implemented? For this, participants were asked to state what options they needed to be available in case of a ban on single-use cups. @fig-options explores those results and shows that the option fo bring your own cups is strongly demanded by the large majority of respondents, with the option to sit down with proper ceramic cups and the option to get multi-use cups with a small deposit below 5 Fr. also being seen as important. More expensive options were not too popular, and also the idea of no available options - where a personal cup would need to be brought - was dismissed by most. 
+We've seen that there is a slight support for a ban, but how should it be implemented? For this, participants were asked to state what options they needed to be available in case of a ban on single-use cups. @fig-options explores those results and shows that the option fo bring your own cups is strongly demanded by the large majority of respondents, with the option to sit down with proper ceramic cups and the option to get multi-use cups with a small deposit below 5 Fr. also being seen as important. More expensive options were not too popular, and also the idea of no available options - where a personal cup would need to be brought - was dismissed by most.
 
 ```{r}
 #| label: fig-options
@@ -435,7 +435,8 @@ ggplot(data = df_options,
 
 
 ```
-Lastly, does a small deposit on a multi-use cup have any effect, or will it just be thrown away and thus treated as a more expensive single-use cup? What deposit is large enough for multi-use cups? This was the last question, where  respondents were asked: "How high do you think a deposit on multi-use cups would need to be in order for them not to be thrown away?" and had to choose a value on a scale from 0 ("No deposit; nobody would throw away a free multi-use cup") to 10 ("10 Fr. or higher"). @fig-deposit shows that responses here were quite varied, with peaks at 2 and 5 Fr., which do not seem to depend too much on the main reason for using single-use cups, unlike initially assumed. @fig-deposit-support shows the same data but split up to show the dependency on the support for a single-use cup ban. There is no real trend to be seen and answers vary widely.
+
+Lastly, does a small deposit on a multi-use cup have any effect, or will it just be thrown away and thus treated as a more expensive single-use cup? What deposit is large enough for multi-use cups? This was the last question, where respondents were asked: "How high do you think a deposit on multi-use cups would need to be in order for them not to be thrown away?" and had to choose a value on a scale from 0 ("No deposit; nobody would throw away a free multi-use cup") to 10 ("10 Fr. or higher"). @fig-deposit shows that responses here were quite varied, with peaks at 2 and 5 Fr., which do not seem to depend too much on the main reason for using single-use cups, unlike initially assumed. @fig-deposit-support shows the same data but split up to show the dependency on the support for a single-use cup ban. There is no real trend to be seen and answers vary widely.
 
 ```{r}
 #| label: fig-deposit
@@ -488,18 +489,23 @@ ggplot(data = df) +
 
 ```
 
-
 # Conclusions {#sec-conclusions}
 
 Conclusions concisely summarize findings in a bullet point format.
 
--   aosbasda
+-   Most respondents are studying engineering at Bachelor's or Master's level at ETH Zürich.
 
--   asdasda
+-   Generally, waste reduction and recycling was seen as important or very important by most, with the importance of waste reduction being slightly higher.
 
--   sdasdas
+-   Single-use cups for hot drinks on campus are never or only occasionally used by the majority of respondents, and convenience was the most popular main reason to use single-use cups.
 
--   daasd
+-   A ban would have negligible impact on daily life of the majority of respondents, with most stating that they would hardly notice it.
+
+-   Support for a ban was only slightly above neutral, with a wide range of opinions.
+
+-   Were a ban to be implemented, the option to bring your own cup at cafeterias is a necessity for most.
+
+-   To summarize, although probably not being the most popular move, a ban with the right alternatives would not have a big negative impact for the majority of respondents and would likely be accepted down the road.
 
 # Raw Data {.appendix} {#sec-data}
 
