@@ -1,0 +1,20 @@
+variable_name,description
+id,ID Column
+age,Age of respondent
+position,Study program of respondent
+field,Study field of respondent
+institution,Institution of respondent
+importance_recycling,The perceived general importance of recycling on a scale from 1 (I don't care) to 5 (I think it's very important)
+importance_waste_reduction,The perceived general importance of waste reduction on a scale from 1 (I don't care) to 5 (I think it's very important)
+singleusecup_frequency,Single-use cup usage frequency of respondent
+singleusecup_reason,Main reason for using single-use cup
+singleusecup_ban_support,"Support for a campus-wide ban on single-use cups on a scale from 1 (No, absolutely not) to 5 (Yes, absolutely)"
+singleusecup_ban_impact,Perceived impact on daily life of a ban on single-use cups on a scale from 1 (I wouldn't notice) to 5 (It would have a negative impact on my daily life)
+options_bring_own_cup,Opinion on the option of bringing a personal cup to cafeterias in case of a ban on single use cups
+options_multiusecup_small_deposit,Opinion on the option of a multi-use cup with a small deposit of under 5 Fr. at cafeterias in case of a ban on single use cups
+options_multiusecup_large_deposit,Opinion on the option of a multi-use cup with a large deposit of over 5 Fr. at cafeterias in case of a ban on single use cups
+options_multiusecup_to_buy,Opinion on the option of buying a multi-use cup for over 10 Fr. at cafeterias in case of a ban on single use cups
+options_sit_down,Opinion on the option of sitting down and drinking the beverage in a proper ceramic cup at no extra cost at cafeterias in case of a ban on single use cups
+options_none,Opinion on the prospect of having no options at cafeterias other than bringing your own cup in case of a ban on single-use cups
+multiusecups_deposit,[Fr.] The minimum amunt for a deposit on a muti-use cup in order for it not to be thrown away
+further_thoughts,further thoughts of the respondent on the issue
